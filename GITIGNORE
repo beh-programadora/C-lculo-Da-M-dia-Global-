@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environment
+env/
+venv/
+.venv/
+.env
+
+# Data
+*.csv
+*.xlsx
+
+# Outputs
+*.pkl
+*.log
