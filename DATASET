@@ -1,0 +1,28 @@
+O diretório Dataset é onde são armazenados os arquivos de dados utilizados no projeto. Neste caso, o projeto de boletim de notas pode não exigir um dataset específico, pois o usuário insere as notas manualmente na interface. No entanto, se futuramente houver a intenção de utilizar dados históricos de notas para análise ou de importar/exportar dados de notas de alunos, esse diretório será fundamental.
+
+Estrutura e Formato dos Dados
+Arquivo de Dados Principal (notas_alunos.csv, por exemplo):
+
+Este arquivo pode conter dados de notas históricas para diferentes matérias e trimestres, se aplicável.
+Estrutura sugerida:
+aluno_id: Identificador único para cada aluno.
+nome: Nome do aluno.
+materia: Nome da disciplina.
+trimestre: Trimestre ao qual a nota pertence.
+nota: Nota obtida no respectivo trimestre.
+Exemplo de Conteúdo:
+aluno_id,nome,materia,trimestre,nota
+1,João Silva,Matemática,1,7.5
+1,João Silva,Matemática,2,8.0
+2,Maria Oliveira,Física,1,6.0
+2,Maria Oliveira,Física,2,7.0
+
+Esse tipo de arquivo pode ser útil para alimentar o sistema com notas pré-existentes ou para análises futuras.
+Arquivos de Notas Consolidadas (boletim_final.csv, por exemplo):
+
+Se o sistema gerar um boletim final consolidado com as notas dos alunos e médias, este arquivo pode armazenar os resultados das notas finais calculadas.
+Estrutura sugerida:
+aluno_id, nome, materia, nota_final, situacao (ex.: "Aprovado" ou "Reprovado").
+Expansão e Utilização Futura do Dataset
+Análises e Relatórios: Esses dados podem ser utilizados para análises estatísticas, visualizações de desempenho de alunos, e cálculo de médias de notas por matéria e trimestre.
+Importação e Exportação: Com o uso de arquivos .csv, o sistema pode ser ampliado para permitir a importação de notas em lote e a exportação dos resultados para relatórios externos.
