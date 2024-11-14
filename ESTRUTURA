@@ -1,0 +1,10 @@
+boletim_notas/
+│
+├── README.md               # Descrição do projeto, instruções de uso, objetivos
+├── requirements.txt        # Bibliotecas necessárias para o projeto
+├── .gitignore              # Arquivos e diretórios a serem ignorados pelo Git
+│
+├── src/                    # Scripts e código-fonte do projeto
+│   └── main.py             # Arquivo principal com o código do boletim de notas em Tkinter
+│
+└── dataset/                # Pasta para armazenar dados, se aplicável
