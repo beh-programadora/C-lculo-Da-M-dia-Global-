@@ -1,0 +1,113 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Função para validar a nota
+def validar_nota(nota):
+    try:
+        nota = float(nota)
+        if 0 <= nota <= 10:
+            return nota
+        else:
+            return None
+    except ValueError:
+        return None
+
+# Função para calcular a nota necessária
+def calcular_nota():
+    notas_trimestre_1 = {}
+    notas_trimestre_2 = {}
+    materias = [
+        "Educação Física", "Língua Estrangeira - Inglês", "Língua Portuguesa e Literatura",
+        "Arte", "Biologia", "Física", "Química", "Conhecimento Científico em Ciências da Natureza",
+        "Experimentação e Outras Práticas Investigativas", "Geografia", "História", "Sociologia",
+        "Filosofia", "Matemática", "Língua Estrangeira - Espanhol", "Projeto de Vida"
+    ]
+    
+    for i, materia in enumerate(materias):
+        nota1 = entry_nota1[i].get()
+        nota2 = entry_nota2[i].get()
+        
+        nota1 = validar_nota(nota1)
+        nota2 = validar_nota(nota2)
+        
+        if nota1 is None or nota2 is None:
+            messagebox.showerror("Erro", f"Por favor, insira notas válidas para {materia}.")
+            return
+        
+        notas_trimestre_1[materia] = nota1
+        notas_trimestre_2[materia] = nota2
+    
+    media_exigida = 6.0
+    notas_necessarias = {}
+    
+    for materia in materias:
+        nota1 = notas_trimestre_1[materia]
+        nota2 = notas_trimestre_2[materia]
+        
+        nota_necessaria = (media_exigida * 3) - (nota1 + nota2)
+        
+        if nota_necessaria > 10:
+            notas_necessarias[materia] = "Impossível atingir média 6."
+        elif nota_necessaria <= 0:
+            notas_necessarias[materia] = "Já tem média suficiente!"
+        else:
+            notas_necessarias[materia] = f"Nota necessária: {nota_necessaria:.2f}"
+    
+    resultado_texto = ""
+    for materia in materias:
+        resultado_texto += f"{materia}: {notas_necessarias[materia]}\n"
+    
+    label_resultado.config(text=resultado_texto, font=("Arial", 10), width=60, height=20)
+
+# Janela principal
+root = tk.Tk()
+root.title("Boletim de Notas")
+root.geometry("650x800")
+
+materias = [
+    "Educação Física", "Língua Estrangeira - Inglês", "Língua Portuguesa e Literatura",
+    "Arte", "Biologia", "Física", "Química", "Conhecimento Científico em Ciências da Natureza",
+    "Experimentação e Outras Práticas Investigativas", "Geografia", "História", "Sociologia",
+    "Filosofia", "Matemática", "Língua Estrangeira - Espanhol", "Projeto de Vida"
+]
+
+canvas = tk.Canvas(root)
+canvas.pack(side="left", fill="both", expand=True)
+scrollbar = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
+scrollbar.pack(side="right", fill="y")
+
+frame = tk.Frame(canvas)
+canvas.configure(yscrollcommand=scrollbar.set)
+canvas.create_window((0, 0), window=frame, anchor="nw")
+
+def on_frame_configure(event):
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
+frame.bind("<Configure>", on_frame_configure)
+
+label_nota1 = []
+label_nota2 = []
+entry_nota1 = []
+entry_nota2 = []
+
+# Layout melhorado com notas lado a lado
+for i, materia in enumerate(materias):
+    # Nome da matéria
+    tk.Label(frame, text=materia).grid(row=i, column=0, padx=10, pady=5, sticky="w")
+    
+    # Entradas para notas do 1º e 2º trimestres
+    tk.Label(frame, text="1º Tri:").grid(row=i, column=1, padx=5)
+    entry_nota1.append(tk.Entry(frame, width=5))
+    entry_nota1[i].grid(row=i, column=2, padx=5)
+    
+    tk.Label(frame, text="2º Tri:").grid(row=i, column=3, padx=5)
+    entry_nota2.append(tk.Entry(frame, width=5))
+    entry_nota2[i].grid(row=i, column=4, padx=5)
+
+botao_calcular = tk.Button(frame, text="Calcular Nota Necessária", command=calcular_nota)
+botao_calcular.grid(row=len(materias), column=0, columnspan=5, pady=15)
+
+label_resultado = tk.Label(frame, text="Resultado aparecerá aqui.", relief="sunken", width=60, height=20, anchor="nw", justify="left", font=("Arial", 10))
+label_resultado.grid(row=len(materias) + 1, column=0, columnspan=5, pady=10)
+
+root.mainloop()
